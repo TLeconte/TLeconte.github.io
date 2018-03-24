@@ -14,7 +14,7 @@ In the following, we will use only the "real" mode at 5Ms/s to test what we coul
 
 Then we will use the octave mathematical software to read the saved file and use the pwelsh function to display the noise power vs frequency :
 
-![base response](./base.png)
+![base response](base.png)
 
 Man could clearly see the IF filter in action . The airspy firmware have programmed it in order to use most of the available 2.5Mhz bandwidth and to be as symmetric as possible around Fs/4 (see later).
 
@@ -31,7 +31,7 @@ By default, the airspy firmware set theses parameters to narrow/15/15 respective
 ### Broad IF filter bandwidth changes
 First, let's try to change the broad if filter bandwidth, keeping fine tuning and high pass filter to 15. We got the following graph :
 
-![broad settings](./broad.png)
+![broad settings](broad.png)
 
 we could clearly see two things :
 1. The filter bandwidth is changed only by changing the upper frequency limit 
@@ -43,7 +43,7 @@ The consequence of 2 is that only the narrower position is usable at Fs=5Ms/s, s
 
 Let change these parameters from 15 to 10 :
 
-![fine settings](./fine.png)
+![fine settings](fine.png)
 
 Here, we see that by lowering this parameter, we could increase the usable bandwidth. As previously, if we go too far (less than 11), aliasing appears. But up to 5 different bandwidths could be used. 
 
@@ -61,7 +61,7 @@ Note : I think that the airspy firmware don't use the maximum bandwidth availabl
 The RL820 has more than a band-pass IF filter. It has a programmable high-pass filter too, that could be use to increase the low frequency limit of the IF bandwidth.
 Let try to change this parameter from 15 (lower, no effect) to 8 :
 
-![high pass settings](./hpf.png)
+![high pass settings](hpf.png)
 
 
 We could see, that, thanks to this parameter, we could reduce the bandwidth a lot. For too low values (< 8), the high-pass filter interacts with the IF band-pass filter and the resulting filter starts to not be usable (reduced gain and completely asymmetric filter), but eights values are usable :
@@ -88,7 +88,7 @@ This function could potentially be added to libairspy itself, but it is only usa
 
 As previously said, IQ conversion is done by the libairspy by mixing at Fs/4 and so the IF filter used must be centered around Fs/4 which is not possible for reduced or extended bandwidth(see graphs). A solution will be to rewrite the IQ conversion code to accept other center frequencies, but we will lose the speed optimization that are possible at Fs/4 only. A good compromise could be to use a filter centered on 3/8Fs and down-sample by 4 to get a 1.25Ms/s IQ stream with the advantage of an adapted IF filter :
 
-![3/8Fs filter](./IQ8.png)
+![3/8Fs filter](IQ8.png)
 
  
 
