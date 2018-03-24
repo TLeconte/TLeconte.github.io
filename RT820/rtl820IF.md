@@ -1,4 +1,7 @@
-﻿# Playing with the Airspy RTL820 IF bandwidth 
+---
+layout: post
+title: Playing with the Airspy RTL820 IF bandwidth 
+---
 
 ## Introduction
 The airspy SDR consists essentially in a RT820 tuner followed by a 12bits DAC, with an ARM SOC to control all that and send data via USB.
