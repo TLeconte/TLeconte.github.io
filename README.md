@@ -9,6 +9,6 @@
 - [airwav](https://github.com/TLeconte/airwav)
    A simple narrow band AM (ie : Aircraft band) recorder/streamer for Airspy or rtl-sdr
 
-## Others things
+## Other things
 
-- [Modifying Airspy R820T IF bandwidth](R820T/r820IF.html)
+- [Playing with Airspy R820T IF bandwidth](R820T/r820IF.html)
