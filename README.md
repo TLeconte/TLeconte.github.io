@@ -8,6 +8,8 @@
    A vdl Mode 2 SDR decoder for airspy and rtl-sdr
 - [airwav](https://github.com/TLeconte/airwav)
    A simple narrow band AM (ie : Aircraft band) recorder/streamer for Airspy or rtl-sdr
+- [airspy_tcp](https://github.com/TLeconte/airspy_tcp)
+   A rtl-tcp compatible, IQ server for airspy SDR 
 
 ## Other things
 
