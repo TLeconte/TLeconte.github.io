@@ -55,7 +55,7 @@ For some sufficiently long time, man will have in regs file , something like tha
 > csv-to-json.py vrs.csv flightaware-xxxxxxx.csv regsu *yourwebserverpath*/dump1090/db
     
 Notes : 
-* vrs.csv and flightaware-xxxxxxx.csv coud be found in https://github.com/flightaware/dump1090/tree/master/tools
+* vrs.csv and flightaware-xxxxxxx.csv could be found in https://github.com/flightaware/dump1090/tree/master/tools
 * *yourwebserverpath* is the path where you store the files of the dump1090 webmap.
     
 At home, in one week, vdlm2dec  received around 2000 differentes aircrafts, more than 500 where not in the original database.
