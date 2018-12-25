@@ -46,7 +46,7 @@ For some sufficiently long time, man will have in regs file , something like tha
   that could be directly used for dump1090 database generation in a few steps.
   
    1. Suppress any duplicates :
-> sort regs | uniq > regsu
+> sort regs \| uniq > regsu
    2. count the number of different receved aircrafts (just to know) :   
 > wc regsu
    3. Add the header :  
