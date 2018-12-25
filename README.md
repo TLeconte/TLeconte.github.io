@@ -8,6 +8,8 @@
    A vdl Mode 2 SDR decoder for airspy and rtl-sdr
 - [adsbdec](https://github.com/TLeconte/adsbdec)
    A basic adsb demodulator for airspy
+- [vortrack](https://github.com/TLeconte/vortrack)
+   A simple VOR receiver 
 - [airwav](https://github.com/TLeconte/airwav)
    A simple narrow band AM (ie : Aircraft band) mp3 recorder/streamer for Airspy or rtl-sdr
 - [airspy_tcp](https://github.com/TLeconte/airspy_tcp)
