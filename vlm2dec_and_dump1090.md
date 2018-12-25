@@ -15,7 +15,7 @@ The CSV format is very simple. The first line must be a header line that names t
     r: the registration / tail number of the aircraft
     t: the ICAO aircraft type of the aircraft, e.g. B773
     
-the following lines contain airiraft data. IE :
+the following lines contain aircraft data, ie :
 
     icao24,r,t
     484045,PH-MCI,B763
@@ -25,17 +25,17 @@ the following lines contain airiraft data. IE :
     406EFF,G-KIAN
     ...
     
- Note  that the aircraft type could be missing.
+ Notes that the aircraft type could be missing.
 
 ## Using vdlm2dec
 I recently add to [vdlm2dec](https://github.com/TLeconte/vdlm2dec) an output mode (-a) that output this csv format from ACARS messages.
 Only the icao address and aircraft registration could be extracted.
-vdlm2dec  memorize for some time each aircraft it received and will output only one line for each.
-So if man let's run 
+So if man let's run :
  
 > vdlm2dec -a 136.725 136.775 136.875 136.975 >> regs
  
-For some suffiantly long time, man will have in regs , something like that :
+For some sufficiently long time, man will have in regs file , something like that :
+
     398501,F-HBIB
     393A6E,F-GOTO
     4066CE,G-TAWG
@@ -43,7 +43,24 @@ For some suffiantly long time, man will have in regs , something like that :
     3C4903,D-ABHC
     ...
   
-  that could be directly used for dump1090 database generation.
+  that could be directly used for dump1090 database generation in a few steps.
+  
+   1. Suppress any duplicates :
+> sort regs | uniq > regsu
+   2. count the number of different receved aircrafts (just to know) :   
+> wc regsu
+   3. Add the header :  
+> sed -i "1iicao24,r" regsu 
+   4. run cvs-to-json.py tools :   
+> csv-to-json.py vrs.csv flightaware-xxxxxxx.csv regsu *yourwebserverpath*/dump1090/db
+    
+Notes : 
+* vrs.csv and flightaware-xxxxxxx.csv coud be found in https://github.com/flightaware/dump1090/tree/master/tools
+* *yourwebserverpath* is the path where you store the files of the dump1090 webmap.
+    
+At home, in one week, vdlm2dec  received around 2000 differentes aircrafts, more than 500 where not in the original database.
+
+
 
  
 
@@ -52,5 +69,4 @@ For some suffiantly long time, man will have in regs , something like that :
  
  
     
- 
  
