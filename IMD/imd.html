@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>IMD</title>
+
+</head>
+<body>
+
+<h2>IMD</h2>
+
+<form onsubmit="return computeIMD();">
+    <fieldset><legend>Harmoniques</legend>
+    H1 :<input type="number" id="H1" name="H1" value="0" max="20" min="-50">dB    <br>
+    H2 :<input type="number" id="H2" name="H2" max="0" min="-120">dB    <br>
+    H3 :<input type="number" id="H3" name="H3" max="0" min="-120">dB    <br>
+    H4 :<input type="number" id="H4" name="H4" max="0" min="-120">dB    <br>
+    H5 :<input type="number" id="H5" name="H5" max="0" min="-120">dB    <br>
+    H6 :<input type="number" id="H6" name="H6" max="0" min="-120">dB    <br>
+    H7 :<input type="number" id="H7" name="H7" max="0" min="-120">dB    <br>
+    H8 :<input type="number" id="H8" name="H8" max="0" min="-120">dB    <br>
+    H9 :<input type="number" id="H9" name="H9" max="0" min="-120">dB    <br>
+    </fieldset>
+    <fieldset>
+    <legend>Frequences</legend>
+    F1 : <input type="number" id="F1" name="F1" value="500" min="10" max="20000" >Hz 
+    F2 : <input type="number" id="F2" name="F2" value="550" min="10" max="20000" >Hz
+    F3 : <input type="number" id="F3" name="F3" min="10" max="20000" >Hz
+    </fieldset>
+    <fieldset><legend>Result</legend>
+    Gain :<input type="number" id="GI" name="GI" value="0" max="20" min="-120">dB 
+    <input type="submit" value="Donwload">
+    </fieldset>
+</form>
+
+<style type="text/css">
+fieldset{
+	border-radius: 10px;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	margin: 0px 0px 10px 0px;
+	border: 1px solid #D2D6FF;
+	padding: 20px;
+	background: #E5E7FF;
+	box-shadow: inset 0px 0px 15px #E5E7FF;
+	-moz-box-shadow: inset 0px 0px 15px #E5E7FF;
+	-webkit-box-shadow: inset 0px 0px 15px #E5E7FF;
+	width:500px;
+}
+fieldset legend{
+	color: #A0D0FF;
+	border-top: 1px solid #D2D6FF;
+	border-left: 1px solid #D2D6FF;
+	border-right: 1px solid #D2D6FF;
+	border-radius: 5px 5px 0px 0px;
+	-webkit-border-radius: 5px 5px 0px 0px;
+	-moz-border-radius: 5px 5px 0px 0px;
+	background: #E5E7FF;
+	padding: 0px 8px 3px 8px;
+	box-shadow: -0px -1px 2px #F1F1F1;
+	-moz-box-shadow:-0px -1px 2px #F1F1F1;
+	-webkit-box-shadow:-0px -1px 2px #F1F1F1;
+	font-weight: normal;
+}
+input[type=number] {
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border: 1px solid #C2C7FF;
+	outline: none;
+	color: #72B1F0;
+	padding: 5px 8px 5px 8px;
+	margin: 5px 5px 5px 5px;
+	box-shadow: inset 1px 1px 4px #D5EAFF;
+	-moz-box-shadow: inset 1px 1px 4px #D5EAFF;
+	-webkit-box-shadow: inset 1px 1px 4px #D5EAFF;
+	background: #EFF7FF;
+	width:70px;
+}
+input[type=submit]{
+	background: #3B99EB;
+	border: 1px solid #4A8AC9;
+	padding: 5px 15px 5px 15px;
+	color: #CBE7FF;
+	box-shadow: inset -1px -1px 3px #62B1FF;
+	-moz-box-shadow: inset -1px -1px 3px #62B1FF;
+	-webkit-box-shadow: inset -1px -1px 3px #62B1FF;
+	border-radius: 3px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;	
+	font-weight: bold;
+	width:100px;
+}
+</style>
+
+<script type="text/javascript">
+
+function AddIt(f,a,p,R) {
+  if(f<0) {
+	f=-f;
+	p=-p+2;
+  }
+  if(p>=2) {
+	p=p-4;
+  }
+  if(p<-2) {
+	p=p+4;
+  }
+  if(f==0 && (p==0 || p ==-2)) {
+	return false;
+  } else {
+	var fr = f.toString();
+	if(R.hasOwnProperty(fr)) {
+		R[fr].a+=a;
+		if(p != R[fr].p) alert("phase error");
+	} else {
+		var S = new Object();
+		S.a=a;
+		S.p=p;
+		R[fr]=S;
+	}
+	return true;
+  }
+}
+
+function multSin(c,Ar,Br,R) {
+ var S;
+
+ for (var fA in Ar) {
+  A=Ar[fA];
+  for (var fB in Br) { 
+	B=Br[fB];
+
+	f=parseInt(fA)+parseInt(fB);
+	a=(A.a*B.a)/2.0;
+ 	p=A.p+B.p+1;
+ 	AddIt(f,c*a,p,R);
+
+	f=parseInt(fA)-parseInt(fB);
+ 	a=(A.a*B.a)/2.0;
+ 	p=A.p-B.p-1;
+ 	AddIt(f,c*a,p,R);
+  }
+ }
+}
+
+function dbtolvl(d) {
+ var r=Math.pow(10.0,parseFloat(d)/20.0);
+ return r;
+}
+
+function download(filename, text) {
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function computeIMD() {
+    var Res=new Object();
+    var n;
+    var f1,f2,f3,f4;
+    var a,p;
+    var Cf=new Array();
+
+    // get harmonics values
+    for (n = 1; n <10; n++) { 
+	a=dbtolvl(document.getElementById("H"+n).value);
+        if(isNaN(a)) {
+                a=0;
+        }
+	Cf[n]=a;
+    }
+
+    // compute polynom coef 
+    Cf[7]-=9*Cf[9];
+    Cf[6]-=8*Cf[8];
+    Cf[5]-=7*Cf[7]+36*Cf[9];
+    Cf[4]-=6*Cf[6]+28*Cf[8];
+    Cf[3]-=5*Cf[5]+21*Cf[7]+84*Cf[9];
+    Cf[2]-=4*Cf[4]+15*Cf[6]+56*Cf[8];
+    Cf[1]-=3*Cf[3]+10*Cf[5]+35*Cf[7]+126*Cf[9];
+	
+    g=dbtolvl(document.getElementById("GI").value);
+    f1=document.getElementById("F1").value;
+    f2=document.getElementById("F2").value;
+    f3=document.getElementById("F3").value;
+
+    var F1={a:g, p:0};
+    var F2={a:g, p:0};
+    var F3={a:g, p:0};
+
+    for (n = 9; n > 0; n--) { 
+	a=Cf[n];
+	if(n == 1) {
+		if(f1!=0) AddIt(f1,a*g,0,Res);
+		if(f2!=0) AddIt(f2,a*g,0,Res);
+		if(f3!=0) AddIt(f3,a*g,0,Res);
+	} else {
+		var Arg1=new Object();
+	        var Arg2=Arg1;
+
+		if(f1!=0) Arg1[f1]=F1;
+		if(f2!=0) Arg1[f2]=F2;
+		if(f3!=0) Arg1[f3]=F3;
+
+		for(i=1;i<n-1;i++) {
+	          	Arg3=new Object();
+		  	multSin(2.0,Arg2,Arg1,Arg3);
+			Arg2=Arg3;
+		}
+		multSin(2.0*a,Arg2,Arg1,Res);
+    	 }		
+    }
+
+    var frd='';
+    for (var fr=0; fr<20000;fr+=1) {
+	if(Res.hasOwnProperty(fr.toString())) {
+		if(Res[fr.toString()].a>=0) {
+			lvl=20*Math.log10(Res[fr.toString()].a);
+			p= Res[fr.toString()].p*Math.PI/4;
+		} else {
+			lvl=20*Math.log10(-Res[fr.toString()].a);
+			p= Res[fr.toString()].p*Math.PI/4-Math.PI;
+		}
+		if(lvl<-140) lvl=-140;
+	} else {
+		lvl=-140;p=0;
+	}
+	frd+=fr+ '\t' + lvl + '\t' + p + '\n';
+    }
+    download("imd.txt",frd);
+
+    return false;
+}
+</script>
+
+</body>
+</html>
+
+
